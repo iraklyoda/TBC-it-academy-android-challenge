@@ -1,5 +1,6 @@
 package com.example.challenge.data.common
 
+import com.example.challenge.domain.common.Resource
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 

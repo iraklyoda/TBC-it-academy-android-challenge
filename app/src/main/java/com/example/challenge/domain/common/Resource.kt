@@ -1,4 +1,4 @@
-package com.example.challenge.data.common
+package com.example.challenge.domain.common
 
 sealed class Resource<out D> {
     data class Success<out D>(val data: D) : Resource<D>()

@@ -8,7 +8,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.challenge.databinding.FragmentConnectionsBinding
-import com.example.challenge.data.mapper.base.BaseFragment
+import com.example.challenge.presentation.BaseFragment
 import com.example.challenge.presentation.event.conection.ConnectionEvent
 import com.example.challenge.presentation.extension.showSnackBar
 import com.example.challenge.presentation.state.connection.ConnectionState

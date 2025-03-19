@@ -3,7 +3,7 @@ package com.example.challenge.presentation.screen.connection
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.challenge.presentation.mapper.connection.toPresenter
-import com.example.challenge.data.common.Resource
+import com.example.challenge.domain.common.Resource
 import com.example.challenge.domain.usecase.connection.GetConnectionsUseCase
 import com.example.challenge.domain.usecase.datastore.ClearPreferencesUseCase
 import com.example.challenge.presentation.event.conection.ConnectionEvent

@@ -23,9 +23,10 @@ object UseCaseModule {
     @Singleton
     @Provides
     fun provideLogInUseCase(
-        logInRepository: LogInRepository
+        logInRepository: LogInRepository,
+        saveTokenUseCase: SaveTokenUseCase
     ): LogInUseCase {
-        return LogInUseCase(logInRepository = logInRepository)
+        return LogInUseCase(logInRepository = logInRepository, saveTokenUseCase = saveTokenUseCase)
     }
 
     @Singleton
