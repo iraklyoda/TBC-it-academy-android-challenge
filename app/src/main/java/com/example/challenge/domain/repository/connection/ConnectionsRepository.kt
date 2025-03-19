@@ -6,5 +6,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface ConnectionsRepository {
     suspend fun getConnections(): Flow<Resource<List<GetConnection>>>
-
 }

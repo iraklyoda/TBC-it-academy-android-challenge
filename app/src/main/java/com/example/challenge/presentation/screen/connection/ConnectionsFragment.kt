@@ -1,5 +1,6 @@
 package com.example.challenge.presentation.screen.connection
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -70,9 +71,14 @@ class ConnectionsFragment :
         }
     }
 
-    private fun handleNavigationEvents(event: ConnectionsViewModel.ConnectionUiEvent) {
-        findNavController().navigate(ConnectionsFragmentDirections.actionFriendsFragmentToLogInFragment())
+    private fun handleNavigationEvents(event: ConnectionUiEvent) {
+        when (event) {
+            is ConnectionUiEvent.NavigateToLogIn -> {
+                findNavController().navigate(
+                    ConnectionsFragmentDirections.actionConnectionsFragmentToLogInFragment()
+                )
+            }
+        }
     }
 }
 
-class String

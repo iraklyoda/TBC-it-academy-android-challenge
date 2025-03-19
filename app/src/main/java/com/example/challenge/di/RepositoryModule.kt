@@ -7,10 +7,10 @@ import com.example.challenge.data.repository.connection.ConnectionsRepositoryImp
 import com.example.challenge.data.repository.datastore.DataStoreRepositoryImpl
 import com.example.challenge.data.repository.log_in.LogInRepositoryImpl
 import com.example.challenge.data.service.connection.ConnectionsService
-import com.example.challenge.data.service.log_in.LogInService
 import com.example.challenge.domain.repository.connection.ConnectionsRepository
 import com.example.challenge.domain.repository.datastore.DataStoreRepository
 import com.example.challenge.domain.repository.log_in.LogInRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,24 +19,17 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+interface RepositoryModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideDataStoreRepository(dataStore: DataStore<Preferences>): DataStoreRepository {
-        return DataStoreRepositoryImpl(dataStore = dataStore)
-    }
+    fun bindDataStoreRepository(dataStoreRepository: DataStoreRepositoryImpl): DataStoreRepository
 
+    @Binds
     @Singleton
-    @Provides
-    fun provideConnectionsRepository(
-        connectionsService: ConnectionsService,
-        handleResponse: HandleResponse
-    ): ConnectionsRepository {
-        return ConnectionsRepositoryImpl(
-            connectionsService = connectionsService,
-            handleResponse = handleResponse
-        )
-    }
+    fun bindConnectionsRepository(connectionsRepository: ConnectionsRepositoryImpl): ConnectionsRepository
 
+    @Binds
+    @Singleton
+    fun bindLoginRepository(loginRepository: LogInRepositoryImpl): LogInRepository
 }

@@ -19,9 +19,7 @@ class ConnectionsRepositoryImpl @Inject constructor(
         return handleResponse.safeApiCall {
             connectionsService.getConnections()
         }.asResource {
-            it.map {
-                it.toDomain()
-            }
+            it.map { it.toDomain() }
         }
     }
 }

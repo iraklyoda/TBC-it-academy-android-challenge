@@ -1,15 +1,12 @@
 package com.example.challenge.data.common
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import com.example.challenge.domain.user_data_key.PreferenceKeys
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 
 class HandleResponse() {
-    fun <T : Any> safeApiCall(call: suspend () -> Response<T>) = flow {
+    fun <T> safeApiCall(
+        call: suspend () -> Response<T>
+    ) = flow {
         emit(Resource.Loading(loading = true))
         try {
             val response = call()

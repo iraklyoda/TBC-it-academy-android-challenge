@@ -1,29 +1,21 @@
 package com.example.challenge.presentation.screen.connection
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.challenge.R
 import com.example.challenge.databinding.ItemConnectionLayoutBinding
 import com.example.challenge.presentation.extension.loadImage
 import com.example.challenge.presentation.model.connection.Connection
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
 class ConnectionsRecyclerAdapter :
     ListAdapter<Connection, ConnectionsRecyclerAdapter.ConnectionsViewHolder>(ConnectionsDiffUtil()) {
 
-    @Inject
-    @ApplicationContext
-    lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ConnectionsViewHolder(
         ItemConnectionLayoutBinding.inflate(
-            LayoutInflater.from(context),
+            LayoutInflater.from(parent.context),
             parent,
             false
         )
