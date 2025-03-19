@@ -1,9 +1,10 @@
 package com.example.challenge.domain.usecase.datastore
 
-import com.example.challenge.domain.repository.datastore.DataStoreRepository
-import com.example.challenge.domain.user_data_key.PreferenceKeys
+
+import com.example.challenge.domain.preferences.AppPreferenceKeys
+import com.example.challenge.domain.preferences.PreferencesStorage
 import javax.inject.Inject
 
-class GetTokenUseCase @Inject constructor(private val dataStoreRepository: DataStoreRepository) {
-    suspend operator fun invoke() = dataStoreRepository.readString(key = PreferenceKeys.TOKEN)
+class GetTokenUseCase @Inject constructor(private val preferencesStorage: PreferencesStorage) {
+    suspend operator fun invoke() = preferencesStorage.readValue(AppPreferenceKeys.TOKEN_KEY, "")
 }

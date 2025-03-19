@@ -1,11 +1,11 @@
 package com.example.challenge.domain.usecase.datastore
 
-import com.example.challenge.domain.repository.datastore.DataStoreRepository
-import com.example.challenge.domain.user_data_key.PreferenceKeys
+import com.example.challenge.domain.preferences.AppPreferenceKeys
+import com.example.challenge.domain.preferences.PreferencesStorage
 import javax.inject.Inject
 
-class SaveTokenUseCase @Inject constructor(private val dataStoreRepository: DataStoreRepository) {
+class SaveTokenUseCase @Inject constructor(private val preferencesStorage: PreferencesStorage) {
     suspend operator fun invoke(token: String) {
-        dataStoreRepository.saveString(key = PreferenceKeys.TOKEN, value = token)
+        preferencesStorage.saveValue(key = AppPreferenceKeys.TOKEN_KEY, value = token)
     }
 }

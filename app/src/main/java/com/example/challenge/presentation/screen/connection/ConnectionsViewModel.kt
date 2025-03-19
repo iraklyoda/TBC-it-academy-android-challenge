@@ -5,15 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.challenge.presentation.mapper.connection.toPresenter
 import com.example.challenge.data.common.Resource
 import com.example.challenge.domain.usecase.connection.GetConnectionsUseCase
-import com.example.challenge.domain.usecase.datastore.ClearDataStoreUseCase
+import com.example.challenge.domain.usecase.datastore.ClearPreferencesUseCase
 import com.example.challenge.presentation.event.conection.ConnectionEvent
 import com.example.challenge.presentation.state.connection.ConnectionState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
@@ -23,11 +22,11 @@ import javax.inject.Inject
 @HiltViewModel
 class ConnectionsViewModel @Inject constructor(
     private val getConnectionsUseCase: GetConnectionsUseCase,
-    private val clearDataStoreUseCase: ClearDataStoreUseCase
+    private val clearDataStoreUseCase: ClearPreferencesUseCase
 ) :
     ViewModel() {
     private val _connectionState = MutableStateFlow(ConnectionState())
-    val connectionState: SharedFlow<ConnectionState> = _connectionState.asStateFlow()
+    val connectionState: StateFlow<ConnectionState> = _connectionState.asStateFlow()
 
     private val _uiEvent = Channel<ConnectionUiEvent>()
     val uiEvent: Flow<ConnectionUiEvent> get() = _uiEvent.receiveAsFlow()
@@ -36,7 +35,6 @@ class ConnectionsViewModel @Inject constructor(
         when (event) {
             is ConnectionEvent.FetchConnections -> fetchConnections()
             is ConnectionEvent.LogOut -> logOut()
-            is ConnectionEvent.ResetErrorMessage -> updateErrorMessage(message = null)
         }
     }
 
@@ -54,7 +52,10 @@ class ConnectionsViewModel @Inject constructor(
                         _connectionState.update { currentState -> currentState.copy(connections = it.data.map { it.toPresenter() }) }
                     }
 
-                    is Resource.Error -> updateErrorMessage(message = it.errorMessage)
+                    is Resource.Error -> {
+                        updateErrorMessage(message = it.errorMessage)
+                        _uiEvent.send(ConnectionUiEvent.ShowErrorSnackBar(connectionState.value.errorMessage))
+                    }
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.example.challenge.presentation.screen.connection
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -51,7 +50,7 @@ class ConnectionsFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiEvent.collect {
-                    handleNavigationEvents(event = it)
+                    handleConnectionsEvents(event = it)
                 }
             }
         }
@@ -64,19 +63,20 @@ class ConnectionsFragment :
         state.connections?.let {
             connectionsRecyclerAdapter.submitList(it)
         }
-
-        state.errorMessage?.let {
-            binding.root.showSnackBar(message = it)
-            viewModel.onEvent(ConnectionEvent.ResetErrorMessage)
-        }
     }
 
-    private fun handleNavigationEvents(event: ConnectionUiEvent) {
+    private fun handleConnectionsEvents(event: ConnectionUiEvent) {
         when (event) {
             is ConnectionUiEvent.NavigateToLogIn -> {
                 findNavController().navigate(
                     ConnectionsFragmentDirections.actionConnectionsFragmentToLogInFragment()
                 )
+            }
+
+            is ConnectionUiEvent.ShowErrorSnackBar -> {
+                event.errorMessage?.let {
+                    binding.root.showSnackBar(message = it)
+                }
             }
         }
     }

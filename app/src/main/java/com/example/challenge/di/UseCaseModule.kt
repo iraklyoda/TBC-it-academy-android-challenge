@@ -1,10 +1,10 @@
 package com.example.challenge.di
 
+import com.example.challenge.domain.preferences.PreferencesStorage
 import com.example.challenge.domain.repository.connection.ConnectionsRepository
-import com.example.challenge.domain.repository.datastore.DataStoreRepository
 import com.example.challenge.domain.repository.log_in.LogInRepository
 import com.example.challenge.domain.usecase.connection.GetConnectionsUseCase
-import com.example.challenge.domain.usecase.datastore.ClearDataStoreUseCase
+import com.example.challenge.domain.usecase.datastore.ClearPreferencesUseCase
 import com.example.challenge.domain.usecase.datastore.GetTokenUseCase
 import com.example.challenge.domain.usecase.datastore.SaveTokenUseCase
 import com.example.challenge.domain.usecase.log_in.LogInUseCase
@@ -45,9 +45,9 @@ object UseCaseModule {
     @Singleton
     @Provides
     fun provideSaveTokenUseCase(
-        dataStoreRepository: DataStoreRepository
+        preferencesStorage: PreferencesStorage
     ): SaveTokenUseCase {
-        return SaveTokenUseCase(dataStoreRepository = dataStoreRepository)
+        return SaveTokenUseCase(preferencesStorage = preferencesStorage)
     }
 
     @Singleton
@@ -61,16 +61,16 @@ object UseCaseModule {
     @Singleton
     @Provides
     fun provideClearDataStoreUseCase(
-        dataStoreRepository: DataStoreRepository
-    ): ClearDataStoreUseCase {
-        return ClearDataStoreUseCase(dataStoreRepository = dataStoreRepository)
+        preferencesStorage: PreferencesStorage
+    ): ClearPreferencesUseCase {
+        return ClearPreferencesUseCase(preferencesStorage = preferencesStorage)
     }
 
     @Singleton
     @Provides
     fun provideGetTokenUseCase(
-        dataStoreRepository: DataStoreRepository
+        preferencesStorage: PreferencesStorage
     ): GetTokenUseCase {
-        return GetTokenUseCase(dataStoreRepository = dataStoreRepository)
+        return GetTokenUseCase(preferencesStorage = preferencesStorage)
     }
 }

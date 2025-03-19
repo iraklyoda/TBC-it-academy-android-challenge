@@ -6,8 +6,10 @@ import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.example.challenge.domain.user_data_key.PreferenceKeys
+import com.example.challenge.data.local.datastore.DataStoreManagerImpl
+import com.example.challenge.domain.preferences.AppPreferenceKeys
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +25,7 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideDataSore(@ApplicationContext context: Context): DataStore<Preferences> {
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(
                 produceNewData = {
@@ -35,10 +37,7 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideAuthToken(dataStore: DataStore<Preferences>): Flow<String?> {
-        return dataStore.data
-            .map { preferences ->
-                preferences[PreferenceKeys.TOKEN]
-            }
+    fun provideAuthToken(dataStore: DataStoreManagerImpl): Flow<String?> {
+        return dataStore.readValue(AppPreferenceKeys.TOKEN_KEY, "")
     }
 }
