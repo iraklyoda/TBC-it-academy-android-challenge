@@ -16,7 +16,6 @@ suspend fun <DTO, DOMAIN> Flow<Resource<DTO>>.asResource(
     }
 }
 
-
 fun <T> Flow<Resource<T>>.handleSuccess(onSuccess: suspend (T) -> Unit): Flow<Resource<T>> {
     return this.map { resource ->
         when (resource) {

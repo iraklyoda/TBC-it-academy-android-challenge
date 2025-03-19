@@ -5,8 +5,8 @@ import com.example.challenge.domain.repository.connection.ConnectionsRepository
 import com.example.challenge.domain.repository.log_in.LogInRepository
 import com.example.challenge.domain.usecase.connection.GetConnectionsUseCase
 import com.example.challenge.domain.usecase.datastore.ClearPreferencesUseCase
-import com.example.challenge.domain.usecase.datastore.GetTokenUseCase
-import com.example.challenge.domain.usecase.datastore.SaveTokenUseCase
+import com.example.challenge.domain.usecase.datastore.GetPreferenceUseCase
+import com.example.challenge.domain.usecase.datastore.SavePreferenceUseCase
 import com.example.challenge.domain.usecase.log_in.LogInUseCase
 import com.example.challenge.domain.usecase.validator.EmailValidatorUseCase
 import com.example.challenge.domain.usecase.validator.PasswordValidatorUseCase
@@ -24,7 +24,7 @@ object UseCaseModule {
     @Provides
     fun provideLogInUseCase(
         logInRepository: LogInRepository,
-        saveTokenUseCase: SaveTokenUseCase
+        saveTokenUseCase: SavePreferenceUseCase
     ): LogInUseCase {
         return LogInUseCase(logInRepository = logInRepository, saveTokenUseCase = saveTokenUseCase)
     }
@@ -47,8 +47,8 @@ object UseCaseModule {
     @Provides
     fun provideSaveTokenUseCase(
         preferencesStorage: PreferencesStorage
-    ): SaveTokenUseCase {
-        return SaveTokenUseCase(preferencesStorage = preferencesStorage)
+    ): SavePreferenceUseCase {
+        return SavePreferenceUseCase(preferencesStorage = preferencesStorage)
     }
 
     @Singleton
@@ -71,7 +71,7 @@ object UseCaseModule {
     @Provides
     fun provideGetTokenUseCase(
         preferencesStorage: PreferencesStorage
-    ): GetTokenUseCase {
-        return GetTokenUseCase(preferencesStorage = preferencesStorage)
+    ): GetPreferenceUseCase {
+        return GetPreferenceUseCase(preferencesStorage = preferencesStorage)
     }
 }
