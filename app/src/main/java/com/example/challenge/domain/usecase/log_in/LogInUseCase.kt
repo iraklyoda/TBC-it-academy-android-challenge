@@ -7,10 +7,10 @@ import javax.inject.Inject
 
 class LogInUseCase @Inject constructor(
     private val logInRepository: LogInRepository,
-    private val saveTokenUseCase: SavePreferenceUseCase
+    private val savePreferenceUseCase: SavePreferenceUseCase
 ) {
     suspend operator fun invoke(email: String, password: String) =
         logInRepository.logIn(email = email, password = password).handleSuccess { data ->
-            saveTokenUseCase(token = data.accessToken)
+            savePreferenceUseCase(token = data.accessToken)
         }
 }
